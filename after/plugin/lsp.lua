@@ -4,16 +4,19 @@ local lsp = require("lsp-zero")
 --     cmd= {'java-language-server'},
 -- }
 require'lspconfig'.nil_ls.setup{}
-require'lspconfig'.gopls.setup{}
-require'lspconfig'.golangci_lint_ls.setup{}
-require'lspconfig'.tsserver.setup{}
-require'lspconfig'.clangd.setup{}
+require'lspconfig'.gopls.setup{
+    settings = {
+        gopls = {
+            gofumpt = true
+        }
+    }
+}
+require'lspconfig'.pylsp.setup{}
 
 require'lspconfig'.intelephense.setup{
     cmd= {'intelephense', '--stdio'},
 }
 
--- require'lspconfig'.gopls.setup{}
 require'lspconfig'.zls.setup{}
 
 require'lspconfig'.clojure_lsp.setup{}
@@ -24,7 +27,7 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
     vim.keymap.set("n", "<leader>cd", function() vim.lsp.buf.definition() end, opts)
     vim.keymap.set("n", "<leader>cD", function() vim.lsp.buf.references() end, opts)
-    vim.keymap.set("n", "gD", function() vim.lsp.buf.references() end, opts)
+    vim.keymap.set("n", "gr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "gi", function() vim.lsp.buf.implementation() end, opts)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
     vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)

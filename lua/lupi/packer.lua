@@ -168,4 +168,7 @@ return require('packer').startup(function(use)
             'stevearc/dressing.nvim', -- optional for vim.ui.select
         },
     }
+
+    use 'mfussenegger/nvim-lint'
+
 end)
