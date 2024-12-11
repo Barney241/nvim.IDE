@@ -19,7 +19,18 @@ require'lspconfig'.intelephense.setup{
 
 require'lspconfig'.zls.setup{}
 
-require'lspconfig'.clojure_lsp.setup{}
+-- require'lspconfig'.clojure_lsp.setup{}
+
+require('lspconfig').nil_ls.setup {
+  autostart = true,
+  settings = {
+    ['nil'] = {
+      formatting = {
+        command = { "nixfmt" },
+      },
+    },
+  },
+}
 
 lsp.on_attach(function(client, bufnr)
     local opts = { buffer = bufnr, remap = false }
