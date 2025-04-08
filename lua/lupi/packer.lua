@@ -135,8 +135,8 @@ return require('packer').startup(function(use)
     use { "mfussenegger/nvim-jdtls" }
     use { 'mfussenegger/nvim-dap' }
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} }
-    use { "jose-elias-alvarez/null-ls.nvim" }
     use { "jay-babu/mason-null-ls.nvim" }
+    use { "nvimtools/none-ls.nvim" }
     use { "folke/neodev.nvim" }
     use({
         "aserowy/tmux.nvim",
