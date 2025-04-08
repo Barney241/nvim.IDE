@@ -1,8 +1,5 @@
 local lsp = require("lsp-zero")
 
--- require'lspconfig'.java_language_server.setup{
---     cmd= {'java-language-server'},
--- }
 require'lspconfig'.nil_ls.setup{}
 require'lspconfig'.gopls.setup{
     settings = {
@@ -31,6 +28,16 @@ require('lspconfig').nil_ls.setup {
     },
   },
 }
+
+require('jdtls').start_or_attach({
+    cmd = {
+        'jdtls',
+    },
+    root_dir = require('jdtls.setup').find_root({'.git', 'build.gradle', 'pom.xml','gradlew'}),
+})
+
+--haskell
+require'lspconfig'.hls.setup{}
 
 lsp.on_attach(function(client, bufnr)
     local opts = { buffer = bufnr, remap = false }
