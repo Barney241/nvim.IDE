@@ -61,5 +61,5 @@ vim.api.nvim_create_autocmd('BufLeave', {
     pattern = '*.md',
 })
 
-vim.opt.foldmethod = "expr"
+vim.opt.foldmethod = 'manual'
 vim.opt.clipboard = "unnamedplus"

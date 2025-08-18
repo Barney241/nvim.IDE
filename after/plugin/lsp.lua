@@ -8,7 +8,14 @@ require'lspconfig'.gopls.setup{
         }
     }
 }
+-- python lsp
 require'lspconfig'.pylsp.setup{}
+vim.lsp.enable('ty')
+vim.lsp.config('ty', {
+  cmd = { "ty", "server" },
+  filetypes = { "python" },
+  root_markers = { "ty.toml", "pyproject.toml", ".git" },
+})
 
 require'lspconfig'.intelephense.setup{
     cmd= {'intelephense', '--stdio'},
@@ -29,15 +36,25 @@ require('lspconfig').nil_ls.setup {
   },
 }
 
-require('jdtls').start_or_attach({
-    cmd = {
-        'jdtls',
-    },
-    root_dir = require('jdtls.setup').find_root({'.git', 'build.gradle', 'pom.xml','gradlew'}),
-})
-
 --haskell
 require'lspconfig'.hls.setup{}
+
+require("conform").setup({
+  formatters_by_ft = {
+    lua = { "stylua" },
+    -- Conform will run multiple formatters sequentially
+    python = { "isort", "black" },
+    -- You can customize some of the format options for the filetype (:help conform.format)
+    rust = { "rustfmt", lsp_format = "fallback" },
+    -- Conform will run the first available formatter
+    javascript = { "prettierd", "prettier", stop_after_first = true },
+  },
+  format_on_save = {
+    -- These options will be passed to conform.format()
+    timeout_ms = 500,
+    lsp_format = "fallback",
+  },
+})
 
 lsp.on_attach(function(client, bufnr)
     local opts = { buffer = bufnr, remap = false }

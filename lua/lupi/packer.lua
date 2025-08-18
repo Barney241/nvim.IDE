@@ -33,7 +33,16 @@ return require('packer').startup(function(use)
         'nvim-treesitter/nvim-treesitter-textobjects',
         after = 'nvim-treesitter',
     }
-    use('theprimeagen/harpoon')
+
+    use "nvim-lua/plenary.nvim"
+    -- use {
+    --     "ThePrimeagen/harpoon",
+    --     branch = "harpoon2",
+    --     requires = { {"nvim-lua/plenary.nvim"} }
+    -- }
+
+    use 'mfussenegger/nvim-jdtls'
+
     use('mbbill/undotree')
     use 'nvim-lualine/lualine.nvim' -- Fancier statusline
 
@@ -61,6 +70,8 @@ return require('packer').startup(function(use)
 
         }
     }
+
+    use({ "stevearc/conform.nvim" })
 
     use({
         "L3MON4D3/LuaSnip",
@@ -132,7 +143,6 @@ return require('packer').startup(function(use)
         end
     }
     use("eandrju/cellular-automaton.nvim")
-    use { "mfussenegger/nvim-jdtls" }
     use { 'mfussenegger/nvim-dap' }
     use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} }
     use { "jay-babu/mason-null-ls.nvim" }
@@ -169,5 +179,8 @@ return require('packer').startup(function(use)
     }
 
     use 'mfussenegger/nvim-lint'
+
+
+    use('augmentcode/augment.vim')
 
 end)

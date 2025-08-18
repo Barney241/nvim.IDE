@@ -27,7 +27,7 @@ local workspace_dir = WORKSPACE_PATH .. project_name
 
 local config2 = {
     cmd = {
-        'jdt-language-server',
+        'jdtls',
         '-data',
         workspace_dir,
     },

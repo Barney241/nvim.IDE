@@ -21,12 +21,11 @@ require('onedark').setup {
     term_colors = true, -- Change terminal color as per the selected theme style
     highlights = {
         ["@type.qualifier"] = { fg = '$orange' },
-        NormalFloat = { fg = "fg1", bg = "NONE" },
+        -- NormalFloat = { fg = "fg1", bg = "NONE" },
         ['@type.definition'] = {
             fg = "$yellow"
         },
-        PMenu = { fg = "fg1", bg = "NONE" },
+        -- PMenu = { fg = "fg1", bg = "NONE" },
     }
 }
 require('onedark').load()
-vim.cmd("colorscheme onedark")
