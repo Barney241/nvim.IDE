@@ -1,15 +1,15 @@
 local lsp = require("lsp-zero")
 
-require'lspconfig'.nil_ls.setup{}
-require'lspconfig'.gopls.setup{
+vim.lsp.enable('gopls')
+vim.lsp.config('gopls', {
     settings = {
         gopls = {
             gofumpt = true
         }
     }
-}
+})
 -- python lsp
-require'lspconfig'.pylsp.setup{}
+vim.lsp.enable('pylsp')
 vim.lsp.enable('ty')
 vim.lsp.config('ty', {
   cmd = { "ty", "server" },
@@ -17,15 +17,17 @@ vim.lsp.config('ty', {
   root_markers = { "ty.toml", "pyproject.toml", ".git" },
 })
 
-require'lspconfig'.intelephense.setup{
-    cmd= {'intelephense', '--stdio'},
-}
+vim.lsp.enable('intelephense')
+vim.lsp.config('intelephense', {
+    cmd = {'intelephense', '--stdio'},
+})
 
-require'lspconfig'.zls.setup{}
+vim.lsp.enable('ts_ls')
 
--- require'lspconfig'.clojure_lsp.setup{}
+vim.lsp.enable('zls')
 
-require('lspconfig').nil_ls.setup {
+vim.lsp.enable('nil_ls')
+vim.lsp.config('nil_ls', {
   autostart = true,
   settings = {
     ['nil'] = {
@@ -34,10 +36,10 @@ require('lspconfig').nil_ls.setup {
       },
     },
   },
-}
+})
 
 --haskell
-require'lspconfig'.hls.setup{}
+vim.lsp.enable('hls')
 
 require("conform").setup({
   formatters_by_ft = {
@@ -164,34 +166,29 @@ require('mason-lspconfig').setup({
     }
 })
 
-local rust_tools = require('rust-tools')
-rust_tools.setup({
-    server = {
-        on_attach = function(client, bufnr)
-            vim.keymap.set('n', '<leader>ca', rust_tools.hover_actions.hover_actions, { buffer = bufnr })
-        end,
-        settings = {
-            ['rust-analyzer'] = {
-                cargo = {
-                    autoReload = true,
-                    features = "all",
-                    buildScripts = {
-                        enable = true
-                    },
+-- Rust LSP setup
+vim.lsp.enable('rust_analyzer')
+vim.lsp.config('rust_analyzer', {
+    settings = {
+        ['rust-analyzer'] = {
+            cargo = {
+                autoReload = true,
+                features = "all",
+                buildScripts = {
+                    enable = true
                 },
-                completion = {
-                    autoimport = {
-                        enable = true,
-                    },
-                    postfix = {
-                        enable = true,
-                    },
+            },
+            completion = {
+                autoimport = {
+                    enable = true,
                 },
-                check = {
-                    features = "all",
+                postfix = {
+                    enable = true,
                 },
-
-            }
+            },
+            check = {
+                features = "all",
+            },
         }
     }
 })

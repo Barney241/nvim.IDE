@@ -183,4 +183,26 @@ return require('packer').startup(function(use)
 
     use('augmentcode/augment.vim')
 
+    use {
+        "folke/snacks.nvim",
+        config = function()
+            require("snacks").setup({
+                bigfile = { enabled = true },
+                indent = { enabled = true },
+                input = { enabled = true },
+                notifier = { enabled = true },
+                quickfile = { enabled = true },
+                scope = { enabled = true },
+                words = { enabled = true },
+            })
+        end
+    }
+
+    -- use "folke/sidekick.nvim"
+
+    use {
+        "coder/claudecode.nvim",
+        requires = { "folke/snacks.nvim" },
+    }
+
 end)
