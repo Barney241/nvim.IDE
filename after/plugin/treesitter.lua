@@ -1,45 +1,26 @@
-require 'nvim-treesitter.configs'.setup {
-    -- A list of parser names, or "all"
-    ensure_installed = { "javascript", "typescript", "c", "lua", "rust", "go", "python" },
+-- nvim-treesitter MAIN branch API (Neovim 0.12+).
+-- master-branch `require('nvim-treesitter.configs').setup{}` no longer exists.
 
-    -- Install parsers synchronously (only applied to `ensure_installed`)
-    sync_install = false,
+local ts = require('nvim-treesitter')
 
-    -- Automatically install missing parsers when entering buffer
-    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-    auto_install = true,
+-- Parsers to keep installed. install() is async and a no-op if already present.
+-- templ is bundled in main (no custom parser config needed).
+-- markdown + markdown_inline are required by render-markdown.nvim.
+ts.install({
+    'javascript', 'typescript', 'tsx', 'c', 'lua', 'rust', 'go', 'gomod',
+    'python', 'templ', 'markdown', 'markdown_inline', 'bash', 'json', 'yaml',
+    'vimdoc',
+})
 
-    highlight = {
-        -- `false` will disable the whole extension
-        enable = true,
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-    },
-}
-
-local treesitter_parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-treesitter_parser_config.templ = {
-  install_info = {
-    url = "https://github.com/vrischmann/tree-sitter-templ.git",
-    files = {"src/parser.c", "src/scanner.c"},
-    branch = "master",
-  },
-}
-
-vim.treesitter.language.register('templ', 'templ')
-
--- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
--- parser_config.odin = {
---     install_info = {
---         url = "github.com/ap29600/tree-sitter-odin", -- local path or git repo
---         files = { "src/parser.c" },                  -- note that some parsers also require src/scanner.c or src/scanner.cc
---         -- optional entries:
---         branch = "main",                             -- default branch in case of git repo if different from master
---         generate_requires_npm = false,               -- if stand-alone parser without npm dependencies
---         requires_generate_from_grammar = false,      -- if folder contains pre-generated src/parser.c
---     },
---     filetype = "odin",                               -- if filetype does not match the parser name
--- }
+-- Highlighting is NOT automatic on main: start it per buffer on FileType.
+-- Injections (e.g. markdown -> markdown_inline) work once highlight is on.
+vim.api.nvim_create_autocmd('FileType', {
+    group = vim.api.nvim_create_augroup('lupi_treesitter', { clear = true }),
+    callback = function(args)
+        local ft = vim.bo[args.buf].filetype
+        local lang = vim.treesitter.language.get_lang(ft)
+        if lang and vim.treesitter.language.add(lang) then
+            vim.treesitter.start(args.buf, lang)
+        end
+    end,
+})

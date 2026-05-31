@@ -39,27 +39,13 @@ vim.o.completeopt = 'menu,menuone,noselect'
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function()
-        vim.highlight.on_yank()
+        vim.hl.on_yank()
     end,
     group = highlight_group,
     pattern = '*',
 })
 
-local markdown_group = vim.api.nvim_create_augroup('MarkdownSpell', { clear = true })
-vim.api.nvim_create_autocmd('BufEnter', {
-    callback = function()
-        vim.opt.spell = true
-    end,
-    group = markdown_group,
-    pattern = '*.md',
-})
-vim.api.nvim_create_autocmd('BufLeave', {
-    callback = function()
-        vim.opt.spell = false
-    end,
-    group = markdown_group,
-    pattern = '*.md',
-})
+-- Markdown spell is set buffer-locally in ftplugin/markdown.lua.
 
 vim.opt.foldmethod = 'manual'
 vim.opt.clipboard = "unnamedplus"
